@@ -7,6 +7,7 @@
 
 #include <New/Type/ShieldTypeClass.h>
 #include <New/Type/LaserTrailTypeClass.h>
+#include <New/Type/AttachmentTypeClass.h>
 
 class Matrix3D;
 
@@ -61,9 +62,26 @@ public:
 		Valueable<bool> DestroyAnim_Random;
 		Valueable<bool> NotHuman_RandomDeathSequence;
 
+		struct AttachmentDataEntry
+		{
+			ValueableIdx<AttachmentTypeClass> Type;
+			NullableIdx<TechnoTypeClass> TechnoType;
+			Valueable<CoordStruct> FLH;
+			Valueable<bool> IsOnTurret;
+
+			bool Load(PhobosStreamReader& stm, bool registerForChange);
+			bool Save(PhobosStreamWriter& stm) const;
+
+		private:
+			template <typename T>
+			bool Serialize(T& stm);
+		};
+
+		ValueableVector<AttachmentDataEntry> AttachmentData;
+
 		struct LaserTrailDataEntry
 		{
-			ValueableIdx<LaserTrailTypeClass> idxType;
+			ValueableIdx<LaserTrailTypeClass> Type;
 			Valueable<CoordStruct> FLH;
 			Valueable<bool> IsOnTurret;
 
@@ -113,7 +131,8 @@ public:
 			OreGathering_FramesPerDir(),
 			LaserTrailData(),
 			DestroyAnim_Random(true),
-			NotHuman_RandomDeathSequence(false)
+			NotHuman_RandomDeathSequence(false),
+			AttachmentData()
 		{ }
 
 		virtual ~ExtData() = default;
