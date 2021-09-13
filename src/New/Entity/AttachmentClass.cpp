@@ -119,8 +119,12 @@ void AttachmentClass::Uninitialize()
 {
 	if (this->Child)
 	{
-		if (this->GetType()->DestructionWeapon_Child.isset())
-			TechnoExt::FireWeaponAtSelf(this->Child, this->GetType()->DestructionWeapon_Child);
+		auto pType = this->GetType();
+		if (pType->DestructionWeapon_Child.isset())
+			TechnoExt::FireWeaponAtSelf(this->Child, pType->DestructionWeapon_Child);
+
+		if (!this->Child->InLimbo && pType->ParentDestructionMission.isset())
+			this->Child->QueueMission(pType->ParentDestructionMission.Get(), false);
 
 		auto pChildExt = TechnoExt::ExtMap.Find(this->Child);
 		pChildExt->ParentAttachment = nullptr;
@@ -194,6 +198,9 @@ bool AttachmentClass::DetachChild(bool isForceDetachment)
 			if (pType->ForceDetachWeapon_Child.isset())
 				TechnoExt::FireWeaponAtSelf(this->Child, pType->DestructionWeapon_Child);
 		}
+
+		if (!this->Child->InLimbo && pType->ParentDetachmentMission.isset())
+			this->Child->QueueMission(pType->ParentDetachmentMission.Get(), false);
 
 		if (pType->InheritOwner)
 			this->Child->SetOwningHouse(this->Parent->GetOriginalOwner(), false);

@@ -28,6 +28,8 @@ public:
 	Nullable<WeaponTypeClass*> ForceDetachWeapon_Parent;
 	Nullable<WeaponTypeClass*> DestructionWeapon_Child;
 	Nullable<WeaponTypeClass*> DestructionWeapon_Parent;
+	Nullable<Mission> ParentDestructionMission;
+	Nullable<Mission> ParentDetachmentMission;
 
 	// Targeting, verses, attachment health max/initial, immunities, possibility
 	// to command are to be done on TechnoType itself
@@ -49,6 +51,8 @@ public:
 		, ForceDetachWeapon_Parent()
 		, DestructionWeapon_Child()
 		, DestructionWeapon_Parent()
+		, ParentDestructionMission()
+		, ParentDetachmentMission()
 	{ }
 
 	virtual ~AttachmentTypeClass() override = default;

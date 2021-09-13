@@ -70,3 +70,11 @@ DEFINE_HOOK(0x51C251, InfantryClass_CanEnterCell_SkipChildren, 0x0)
 
 	return Continue;
 }
+
+// TODO
+// 0x4DEAE0 IC for footclass
+// 0x457C90 IC (forceshield) for buildings
+// 0x6CCCCA Chrono Warp
+// 0x4694BB Temporal warhead
+// 0x4696FB Locomotor warhead
+// ...
